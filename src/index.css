@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-washi text-sumi font-sans antialiased;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(1100px 600px at 85% -5%, rgba(243, 182, 195, 0.35), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(143, 168, 118, 0.18), transparent 55%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: #e0483d;
+    color: #fff;
+  }
+
+  /* Японский "горизонтальный ритм" — кастомный скроллбар */
+  ::-webkit-scrollbar {
+    width: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f3eadb;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(#e0483d, #c13327);
+    border-radius: 99px;
+    border: 3px solid #f3eadb;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8;
+  }
+
+  /* Карточка в стиле "васи" */
+  .card-washi {
+    @apply rounded-4xl border border-white/70 bg-white/80 shadow-soft backdrop-blur-sm;
+  }
+
+  /* Иероглифический штамп-печать (ханко) */
+  .hanko {
+    @apply inline-flex items-center justify-center rounded-xl border-2 border-shu/70 font-jp font-bold text-shu;
+  }
+}
+
+@layer utilities {
+  .text-gradient-shu {
+    background: linear-gradient(120deg, #e0483d 0%, #f2705f 45%, #c9a24b 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .text-gradient-ink {
+    background: linear-gradient(120deg, #241f1b 0%, #2c3e5d 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .ink-stroke {
+    text-shadow: 0 2px 0 rgba(36, 31, 27, 0.08);
+  }
+
+  .highlight-shu {
+    background: linear-gradient(transparent 58%, rgba(243, 182, 195, 0.75) 58%);
+    padding: 0 0.15em;
+  }
+
+  .highlight-kin {
+    background: linear-gradient(transparent 58%, rgba(230, 201, 119, 0.7) 58%);
+    padding: 0 0.15em;
+  }
+
+  /* Тонкая сетка "васи" поверх секций */
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image: radial-gradient(rgba(36, 31, 27, 0.04) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .shimmer-text {
+    background: linear-gradient(90deg, #c9a24b, #f2e2b5, #c9a24b);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 2.5s linear infinite;
+  }
+
+  .perspective {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+}
+
+/* Падающие лепестки сакуры — отдельные кейфреймы для рандомизации в JS */
+@keyframes petal-drop {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--drift, 40px), 110vh, 0) rotate(var(--spin, 360deg));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
